@@ -75,7 +75,7 @@ class _PageBuildState extends State<PageBuild> {
               top: 150 * heightRatio,
               child: SizedBox(
                 width: 320 * widthRatio,
-                height: 400 * heightRatio,
+                height: 320 * heightRatio,   // ### size box
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -109,7 +109,7 @@ class _PageBuildState extends State<PageBuild> {
             ),
           if (showCloseButton)
             Positioned(
-              left: 90 * widthRatio,
+              left: 85 * widthRatio,   // ### size box
               top: 480 * heightRatio,
               child: GestureDetector(
                 onTap: closeVideo,

@@ -35,7 +35,9 @@ class _Page1State extends State<Page1> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
+        body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
         children: [
           _imageUrl == null
               ? Positioned(
@@ -166,7 +168,7 @@ class _Page1State extends State<Page1> {
             ),
           ),
         ],
-      ),
+      ),),
     );
   }
 }

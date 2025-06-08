@@ -126,28 +126,28 @@ class _ProFaqState extends State<ProFaq> {
             ),
           Positioned(
             left: 0 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: navIcon('assets/images/icon_home_basic.png', () =>
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const ProHome()))
             ),
           ),
           Positioned(
             left: 93 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: navIcon('assets/images/icon_hos_basic.png', () =>
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const ProHospital()))
             ),
           ),
           Positioned(
             left: 186 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: navIcon('assets/images/icon_adm_basic.png', () =>
                 Navigator.push(context, MaterialPageRoute(builder: (_) => const ProAdm()))
             ),
           ),
           Positioned(
             left: 279 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: SizedBox(
               width: 93 * widthRatio,
               height: 50 * heightRatio,

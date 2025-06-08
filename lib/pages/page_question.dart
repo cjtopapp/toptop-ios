@@ -88,10 +88,10 @@ class _PageQuestionState extends State<PageQuestion> {
           if (!showLay2)
             Positioned(
               left: 27.5 * widthRatio,
-              top: 80 * heightRatio,
+              top: 100 * heightRatio,   // ### size box
               child: SizedBox(
                 width: 320 * widthRatio,
-                height: 500 * heightRatio,
+                height: 400 * heightRatio,   // ### size box
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -156,7 +156,7 @@ class _PageQuestionState extends State<PageQuestion> {
           if (showCloseManual)
             Positioned(
               left: 90 * widthRatio,
-              top: 480 * heightRatio,
+              top: 510 * heightRatio, // ### size box
               child: GestureDetector(
                 onTap: hideManual,
                 child: SizedBox(

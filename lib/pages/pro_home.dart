@@ -163,7 +163,7 @@ class _ProHomeState extends State<ProHome> {
           ),
           Positioned(
             left: 0 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: SizedBox(
               width: 93 * widthRatio,
               height: 50 * heightRatio,
@@ -175,7 +175,7 @@ class _ProHomeState extends State<ProHome> {
           ),
           Positioned(
             left: 93 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProHospital())),
               child: SizedBox(
@@ -190,7 +190,7 @@ class _ProHomeState extends State<ProHome> {
           ),
           Positioned(
             left: 186 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProAdm())),
               child: SizedBox(
@@ -205,7 +205,7 @@ class _ProHomeState extends State<ProHome> {
           ),
           Positioned(
             left: 279 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProFaq())),
               child: SizedBox(

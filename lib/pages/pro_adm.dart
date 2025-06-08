@@ -70,7 +70,7 @@ class _ProAdmState extends State<ProAdm> {
 
     Widget timeImage(String asset, VoidCallback onTap) => Positioned(
       left: 27.5,
-      top: 100,
+      top: 90, // ### size mix
       child: GestureDetector(
         onTap: onTap,
         child: SizedBox(
@@ -125,26 +125,32 @@ class _ProAdmState extends State<ProAdm> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: toggleTimeAdm,
                         child: Image.asset('assets/images/pro_adm.png', fit: BoxFit.contain),
                       ),
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: toggleTimeOp,
                         child: Image.asset('assets/images/pro_op.png', fit: BoxFit.contain),
                       ),
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: toggleTimeDc,
                         child: Image.asset('assets/images/pro_dc.png', fit: BoxFit.contain),
                       ),
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageDx())),
                         child: Image.asset('assets/images/pro_dx.png', fit: BoxFit.contain),
                       ),
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageBuild())),
                         child: Image.asset('assets/images/open_build.png', fit: BoxFit.contain),
                       ),
+                      const SizedBox(height: 20),   // ### size mix
                       GestureDetector(
                         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageQuestion())),
                         child: Image.asset('assets/images/open_question.png', fit: BoxFit.contain),
@@ -171,7 +177,7 @@ class _ProAdmState extends State<ProAdm> {
           if (showTimeAdm2) timeImage('assets/images/time_adm_2.png', toggleTimeAdm),
           Positioned(
             left: 0 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProHome())),
               child: SizedBox(
@@ -183,7 +189,7 @@ class _ProAdmState extends State<ProAdm> {
           ),
           Positioned(
             left: 93 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProHospital())),
               child: SizedBox(
@@ -195,7 +201,7 @@ class _ProAdmState extends State<ProAdm> {
           ),
           Positioned(
             left: 186 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () {}, // 현재 페이지
               child: SizedBox(
@@ -207,7 +213,7 @@ class _ProAdmState extends State<ProAdm> {
           ),
           Positioned(
             left: 279 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProFaq())),
               child: SizedBox(

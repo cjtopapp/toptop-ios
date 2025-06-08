@@ -89,7 +89,7 @@ class _ProHospitalState extends State<ProHospital> {
           ),
           Positioned(
             left: 0 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(
                 context,
@@ -107,7 +107,7 @@ class _ProHospitalState extends State<ProHospital> {
           ),
           Positioned(
             left: 93 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: SizedBox(
               width: 93 * widthRatio,
               height: 50 * heightRatio,
@@ -119,7 +119,7 @@ class _ProHospitalState extends State<ProHospital> {
           ),
           Positioned(
             left: 186 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(
                 context,
@@ -137,7 +137,7 @@ class _ProHospitalState extends State<ProHospital> {
           ),
           Positioned(
             left: 279 * widthRatio,
-            top: 615 * heightRatio,
+            top: 605 * heightRatio,  // size mix
             child: GestureDetector(
               onTap: () => Navigator.push(
                 context,

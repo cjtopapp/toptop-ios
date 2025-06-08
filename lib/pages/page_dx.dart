@@ -149,7 +149,7 @@ class _PageDxState extends State<PageDx> {
                 onTap: hideVisibleTime,
                 child: SizedBox(
                   width: 340 * widthRatio,
-                  height: 570 * heightRatio,
+                  height: 530 * heightRatio, // ### size mix
                   child: Image.asset(
                     'assets/images/$visibleTimeButton',
                     fit: BoxFit.cover,
