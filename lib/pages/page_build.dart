@@ -61,7 +61,7 @@ class _PageBuildState extends State<PageBuild> {
         children: [
           if (videoVisible && currentVideo != null)
             Positioned(
-              left: 40 * widthRatio,
+              left: (375 * widthRatio - 300 * widthRatio) / 2,   // sizebox #3 
               top: 150 * heightRatio,
               child: SizedBox(
                 width: 300 * widthRatio,
@@ -71,7 +71,7 @@ class _PageBuildState extends State<PageBuild> {
             ),
           if (buttonsVisible)
             Positioned(
-              left: 27.5 * widthRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
               top: 150 * heightRatio,
               child: SizedBox(
                 width: 320 * widthRatio,
@@ -109,7 +109,7 @@ class _PageBuildState extends State<PageBuild> {
             ),
           if (showCloseButton)
             Positioned(
-              left: 85 * widthRatio,   // ### size box
+              left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
               top: 480 * heightRatio,
               child: GestureDetector(
                 onTap: closeVideo,
@@ -121,7 +121,7 @@ class _PageBuildState extends State<PageBuild> {
               ),
             ),
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(

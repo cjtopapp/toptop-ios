@@ -72,7 +72,7 @@ class _PageOpeningState extends State<PageOpening> {
       body: Stack(
         children: [
           Positioned(
-            left: 105 * widthRatio,
+            left: (375 * widthRatio - 160 * widthRatio) / 2,   // size box #3
             top: 250 * heightRatio,
             child: SizedBox(
                 width: 160 * widthRatio,
@@ -85,16 +85,16 @@ class _PageOpeningState extends State<PageOpening> {
           ),
           if (_videoInitialized)
             Positioned(
-              left: 28 * widthRatio,
-              top: 242 * heightRatio,
+              left: (375 * widthRatio - 288 * widthRatio) / 2,   // size box #3
+              top: 250 * heightRatio,
               child: SizedBox(
-                width: 320 * widthRatio,
-                height: 180 * heightRatio,
+                width: 288 * widthRatio,   // size box #3
+                height: 162 * heightRatio,   // size box #3
                 child: FittedBox(
                   fit: BoxFit.contain,
                   child: SizedBox(
-                    width: 320 * widthRatio,
-                    height: 180 * heightRatio,
+                    width: 288 * widthRatio,   // size box #3
+                    height: 162 * heightRatio,   // size box #3
                     child: VideoPlayer(_controller),
                   ),
                 ),
@@ -105,3 +105,5 @@ class _PageOpeningState extends State<PageOpening> {
     );
   }
 }
+
+// git config --global --add safe.directory C:/src -> terminal 오류 시

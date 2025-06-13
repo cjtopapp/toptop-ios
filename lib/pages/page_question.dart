@@ -56,7 +56,7 @@ class _PageQuestionState extends State<PageQuestion> {
       body: Stack(
         children: [
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(
@@ -87,7 +87,7 @@ class _PageQuestionState extends State<PageQuestion> {
           ),
           if (!showLay2)
             Positioned(
-              left: 27.5 * widthRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
               top: 100 * heightRatio,   // ### size box
               child: SizedBox(
                 width: 320 * widthRatio,
@@ -103,7 +103,7 @@ class _PageQuestionState extends State<PageQuestion> {
                           child: Image.asset('assets/images/OS2.png', fit: BoxFit.contain),
                         ),
                       ),
-                      SizedBox(height: 10 * heightRatio),
+                      // SizedBox(height: 10 * heightRatio),
                       GestureDetector(
                         onTap: () => showImage('op_OS1.png'),
                         child: SizedBox(
@@ -112,7 +112,7 @@ class _PageQuestionState extends State<PageQuestion> {
                           child: Image.asset('assets/images/OS1.png', fit: BoxFit.contain),
                         ),
                       ),
-                      SizedBox(height: 10 * heightRatio),
+                      // SizedBox(height: 10 * heightRatio),
                       GestureDetector(
                         onTap: () => showImage('op_NS.png'),
                         child: SizedBox(
@@ -128,14 +128,14 @@ class _PageQuestionState extends State<PageQuestion> {
             ),
           if (showLay2 && visibleImage != null)
             Positioned(
-              left: 20,
-              top: 100,
-              bottom: 200,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
+              top: 100 * heightRatio,
+              // bottom: 200,
               child: GestureDetector(
                 onTap: hideImage,
                 child: SizedBox(
-                  width: 375 * widthRatio,
-                  height: 665 * heightRatio,
+                  width: 320 * widthRatio,
+                  height: 400 * heightRatio,   // size box #3
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Image.asset('assets/images/$visibleImage', fit: BoxFit.fitHeight),
@@ -145,7 +145,7 @@ class _PageQuestionState extends State<PageQuestion> {
             ),
           if (showLay2 && showScrollLeftRight)
             Positioned(
-              left: 100 * widthRatio,
+              left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
               top: 150 * heightRatio,
               child: SizedBox(
                 width: 200 * widthRatio,
@@ -155,7 +155,7 @@ class _PageQuestionState extends State<PageQuestion> {
             ),
           if (showCloseManual)
             Positioned(
-              left: 90 * widthRatio,
+              left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
               top: 510 * heightRatio, // ### size box
               child: GestureDetector(
                 onTap: hideManual,

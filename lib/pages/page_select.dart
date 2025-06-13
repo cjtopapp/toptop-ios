@@ -29,7 +29,7 @@ class PageSelect extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 40 * widthRatio,
+            left: (375 * widthRatio - 300 * widthRatio) / 2,
             top: 120 * heightRatio,
             child: SizedBox(
               width: 300 * widthRatio,
@@ -47,7 +47,7 @@ class PageSelect extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 40 * widthRatio,
+            left: (375 * widthRatio - 300 * widthRatio) / 2,
             top: 240 * heightRatio,
             child: SizedBox(
               width: 300 * widthRatio,
@@ -65,7 +65,7 @@ class PageSelect extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: SizedBox(
               width: 200 * widthRatio,

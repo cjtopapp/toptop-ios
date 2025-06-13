@@ -68,14 +68,14 @@ class _ProAdmState extends State<ProAdm> {
     final widthRatio = MediaQuery.of(context).size.width / baseWidth;
     final heightRatio = MediaQuery.of(context).size.height / baseHeight;
 
-    Widget timeImage(String asset, VoidCallback onTap) => Positioned(
-      left: 27.5,
-      top: 90, // ### size mix
+    Widget timeImage(String asset, VoidCallback onTap) => Positioned(   // time_image 표시되는 곳
+      left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #3
+      top: 110 * heightRatio,   // size box #3
       child: GestureDetector(
         onTap: onTap,
         child: SizedBox(
           width: 340 * widthRatio,
-          height: 530 * heightRatio,
+          height: 490 * heightRatio,   // size box #3
           child: Image.asset(asset, fit: BoxFit.contain),
         ),
       ),
@@ -86,7 +86,7 @@ class _ProAdmState extends State<ProAdm> {
       body: Stack(
         children: [
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageSelect())),
@@ -98,7 +98,7 @@ class _ProAdmState extends State<ProAdm> {
             ),
           ),
           Positioned(
-            left: 27.5 * widthRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // sizebox #3
             top: 120 * heightRatio,
             child: SizedBox(
               width: 320 * widthRatio,
@@ -117,8 +117,8 @@ class _ProAdmState extends State<ProAdm> {
           ),
           if (showLay2)
             Positioned(
-              left: 27.5 * widthRatio,
-              top: 300 * heightRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
+              top: 310 * heightRatio,
               child: SizedBox(
                 width: 320 * widthRatio,
                 height: 250 * heightRatio,
@@ -163,7 +163,7 @@ class _ProAdmState extends State<ProAdm> {
             ),
           if (showScroll)
             Positioned(
-              left: 120 * widthRatio,
+              left: (375 * widthRatio - 150 * widthRatio) / 2,   // size box #3
               top: 330 * heightRatio,
               child: SizedBox(
                 width: 150 * widthRatio,
@@ -206,7 +206,7 @@ class _ProAdmState extends State<ProAdm> {
               onTap: () {}, // 현재 페이지
               child: SizedBox(
                 width: 93 * widthRatio,
-                height: 50 * widthRatio,
+                height: 50 * heightRatio,
                 child: Image.asset('assets/images/icon_adm_color.png', fit: BoxFit.contain),
               ),
             ),
@@ -218,7 +218,7 @@ class _ProAdmState extends State<ProAdm> {
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProFaq())),
               child: SizedBox(
                 width: 93 * widthRatio,
-                height: 50 * widthRatio,
+                height: 50 * heightRatio,
                 child: Image.asset('assets/images/icon_faq_basic.png', fit: BoxFit.contain),
               ),
             ),

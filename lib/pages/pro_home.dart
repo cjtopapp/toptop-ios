@@ -58,7 +58,7 @@ class _ProHomeState extends State<ProHome> {
       body: Stack(
         children: [
           Positioned(
-            left: 27.5 * widthRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
             top: 120 * heightRatio,
             child: _videoController.value.isInitialized
                 ? FittedBox(
@@ -72,11 +72,11 @@ class _ProHomeState extends State<ProHome> {
                 : const SizedBox.shrink(),
           ),
           Positioned(
-            left: 27.5 * widthRatio,
-            top: 300 * heightRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
+            top: 310 * heightRatio,   // size box #3
             child: SizedBox(
               width: 320 * widthRatio,
-              height: 250 * heightRatio,
+              height: 240 * heightRatio,   // size box #3
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -94,7 +94,7 @@ class _ProHomeState extends State<ProHome> {
           ),
           if (showScroll)
             Positioned(
-              left: 120 * widthRatio,
+              left: (375 * widthRatio - 150 * widthRatio) / 2,   // size box #3
               top: 330 * heightRatio,
               child: SizedBox(
                 width: 150 * widthRatio,
@@ -106,7 +106,7 @@ class _ProHomeState extends State<ProHome> {
               ),
             ),
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageSelect())),
@@ -220,13 +220,13 @@ class _ProHomeState extends State<ProHome> {
           ),
           if (showImageSchedule)
             Positioned(
-              left: -1 * widthRatio,
-              top: 30 * heightRatio,
+              left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #3
+              top: 100 * heightRatio,   // size box #3
               child: GestureDetector(
                 onTap: toggleImageSchedule,
                 child: SizedBox(
-                  width: 360 * widthRatio,
-                  height: 640 * heightRatio,
+                  width: 340 * widthRatio,   // size box #3
+                  height: 500 * heightRatio,   // size box #3
                   child: Image.asset(
                     'assets/images/image_schedule.png',
                     fit: BoxFit.contain,

@@ -41,7 +41,7 @@ class _Page1State extends State<Page1> {
         children: [
           _imageUrl == null
               ? Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
             top: 40 * heightRatio,
             child: SizedBox(
               width: 200 * widthRatio,
@@ -50,7 +50,7 @@ class _Page1State extends State<Page1> {
             ),
           )
               : Positioned(
-            left: 20 * widthRatio,
+            left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
             top: 40 * heightRatio,
             child: SizedBox(
               width: 335 * widthRatio,
@@ -59,7 +59,7 @@ class _Page1State extends State<Page1> {
             ),
           ),
           Positioned(
-            left: 20 * widthRatio,
+            left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
             top: 260 * heightRatio,
             child: SizedBox(
               width: 335 * widthRatio,
@@ -147,11 +147,11 @@ class _Page1State extends State<Page1> {
             ),
           ),
           Positioned(
-            left: 0,
-            top: 450 * heightRatio,
+            left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #3
+            top: 470 * heightRatio,   // size box #3
             child: SizedBox(
-              width: 375 * widthRatio,
-              height: 250 * heightRatio,
+              width: 340 * widthRatio,   // size box #3
+              height: 200 * heightRatio,   // size box #3
               child: Image.asset('assets/images/doctors.png', fit: BoxFit.contain),
             ),
           ),

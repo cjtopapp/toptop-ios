@@ -48,7 +48,7 @@ class _PageDxState extends State<PageDx> {
       body: Stack(
         children: [
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(
@@ -81,7 +81,7 @@ class _PageDxState extends State<PageDx> {
             ),
           ),
           Positioned(
-            left: 40 * widthRatio,
+            left: (375 * widthRatio - 300 * widthRatio) / 2,   // sizebox #3
             top: 200 * heightRatio,
             child: GestureDetector(
               onTap: showBarUpper,
@@ -96,7 +96,7 @@ class _PageDxState extends State<PageDx> {
             ),
           ),
           Positioned(
-            left: 40 * widthRatio,
+            left: (375 * widthRatio - 300 * widthRatio) / 2,   // sizebox #3
             top: 275 * heightRatio,
             child: GestureDetector(
               onTap: showBarBack,
@@ -111,7 +111,7 @@ class _PageDxState extends State<PageDx> {
             ),
           ),
           Positioned(
-            left: 40 * widthRatio,
+            left: (375 * widthRatio - 300 * widthRatio) / 2,   // sizebox #3
             top: 350 * heightRatio,
             child: GestureDetector(
               onTap: showBarJp,
@@ -127,13 +127,13 @@ class _PageDxState extends State<PageDx> {
           ),
           if (visibleTime != null)
             Positioned(
-              left: 27.5 * widthRatio,
-              top: 80 * heightRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // sizebox #3
+              top: 100 * heightRatio,   // sizebox #3
               child: GestureDetector(
                 onTap: hideVisibleTime,
                 child: SizedBox(
-                  width: 320 * widthRatio,
-                  height: 570 * heightRatio,
+                  width: 320 * widthRatio,   // sizebox #3
+                  height: 460 * heightRatio,   // sizebox #3
                   child: Image.asset(
                     'assets/images/$visibleTime',
                     fit: BoxFit.contain,
@@ -143,13 +143,13 @@ class _PageDxState extends State<PageDx> {
             ),
           if (showTimeButtons && visibleTimeButton != null)
             Positioned(
-              left: 27.5 * widthRatio,
-              top: 100 * heightRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // sizebox #3
+              top: 100 * heightRatio,   // sizebox #3
               child: GestureDetector(
                 onTap: hideVisibleTime,
                 child: SizedBox(
-                  width: 340 * widthRatio,
-                  height: 530 * heightRatio, // ### size mix
+                  width: 320 * widthRatio,   // sizebox #3
+                  height: 460 * heightRatio,   // sizebox #3
                   child: Image.asset(
                     'assets/images/$visibleTimeButton',
                     fit: BoxFit.cover,

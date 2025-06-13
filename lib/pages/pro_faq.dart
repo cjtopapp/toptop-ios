@@ -55,7 +55,7 @@ class _ProFaqState extends State<ProFaq> {
       height: 50 * MediaQuery.of(context).size.height / 665,
       child: Image.asset(asset, fit: BoxFit.contain),
     ),
-  );
+  );   // 네비게이션 아이콘 크기 -> 근데 왜 여기로 왔는지...
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class _ProFaqState extends State<ProFaq> {
       body: Stack(
         children: [
           Positioned(
-            left: 27.5 * widthRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
             top: 120 * heightRatio,
             child: _controller.value.isInitialized
                 ? FittedBox(
@@ -83,8 +83,8 @@ class _ProFaqState extends State<ProFaq> {
                 : const SizedBox.shrink(),
           ),
           Positioned(
-            left: 27.5 * widthRatio,
-            top: 300 * heightRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
+            top: 310 * heightRatio,   // size box #3
             child: SizedBox(
               width: 320 * widthRatio,
               height: 250 * heightRatio,
@@ -103,7 +103,7 @@ class _ProFaqState extends State<ProFaq> {
             ),
           ),
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const PageSelect())),
@@ -116,7 +116,7 @@ class _ProFaqState extends State<ProFaq> {
           ),
           if (showScroll)
             Positioned(
-              left: 120 * widthRatio,
+              left: (375 * widthRatio - 150 * widthRatio) / 2,   // sizebox #3
               top: 330 * heightRatio,
               child: SizedBox(
                 width: 150 * widthRatio,

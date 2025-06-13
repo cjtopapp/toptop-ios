@@ -48,32 +48,32 @@ class _PageNS2State extends State<PageNS2> {
         children: [
           if (!showDetailOnly)
             Positioned(
-              left: 27.5 * widthRatio,
+              left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
               top: 330 * heightRatio,
               child: SizedBox(
-                width: 300 * widthRatio,
-                height: 150 * heightRatio,
+                width: 320 * widthRatio,   // size box #3
+                height: 240 * heightRatio,   // size box #3
                 child: Image.asset(
                   'assets/images/intro_NS2.png',
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-          if (!showDetailOnly)
-            Positioned(
-              left: 20 * widthRatio,
-              top: 510 * heightRatio,
-              child: SizedBox(
-                width: 270 * widthRatio,
-                height: 80 * heightRatio,
-                child: Image.asset(
-                  'assets/images/time_NS2.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
+          // if (!showDetailOnly)
+          //   Positioned(
+          //     left: 20 * widthRatio,
+          //     top: 510 * heightRatio,
+          //     child: SizedBox(
+          //       width: 270 * widthRatio,
+          //       height: 80 * heightRatio,
+          //       child: Image.asset(
+          //         'assets/images/time_NS2.png',
+          //         fit: BoxFit.contain,
+          //       ),
+          //     ),
+          //   ),
           Positioned(
-            left: 27.5 * widthRatio,
+            left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
             top: 120 * heightRatio,
             child: SizedBox(
               width: 320 * widthRatio,
@@ -91,7 +91,7 @@ class _PageNS2State extends State<PageNS2> {
             ),
           ),
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.pushReplacement(

@@ -31,7 +31,7 @@ class _PagePtState extends State<PagePt> {
       body: Stack(
         children: [
           Positioned(
-            left: 90 * widthRatio,
+            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(
@@ -84,7 +84,7 @@ class _PagePtState extends State<PagePt> {
           ),
           if (showScroll)
             Positioned(
-              left: 120 * widthRatio,
+              left: (375 * widthRatio - 150 * widthRatio) / 2,   // sizebox #3
               top: 330 * heightRatio,
               child: SizedBox(
                 width: 150 * widthRatio,
