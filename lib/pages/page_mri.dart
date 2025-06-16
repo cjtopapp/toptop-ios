@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'page_select.dart';
 import 'pro_hospital.dart';
+import 'toptop.dart';
 
 class PageMri extends StatefulWidget {
   const PageMri({super.key});
@@ -30,13 +31,14 @@ class _PageMriState extends State<PageMri> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+
           Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
+            left: 40 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const PageSelect()),
+                MaterialPageRoute(builder: (context) => const PageSelect()),
               ),
               child: SizedBox(
                 width: 200 * widthRatio,
@@ -48,6 +50,26 @@ class _PageMriState extends State<PageMri> {
               ),
             ),
           ),
+
+          Positioned(
+            left: 250 * widthRatio,   // size box toptop
+            top: 40 * heightRatio,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
+              ),
+              child: SizedBox(
+                width: 85 * widthRatio,
+                height: 50 * heightRatio,
+                child: Image.asset(
+                  'assets/images/logo_toptop.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+
           Positioned(
             left: (375 * widthRatio - 350 * widthRatio) / 2,
             top: 120 * heightRatio,

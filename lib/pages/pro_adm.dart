@@ -8,6 +8,7 @@ import 'page_dx.dart';
 import 'page_build.dart';
 import 'page_question.dart';
 import 'page_select.dart';
+import 'toptop.dart';
 
 class ProAdm extends StatefulWidget {
   const ProAdm({super.key});
@@ -85,18 +86,45 @@ class _ProAdmState extends State<ProAdm> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+
           Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
+            left: 40 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageSelect())),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageSelect()),
+              ),
               child: SizedBox(
                 width: 200 * widthRatio,
                 height: 50 * heightRatio,
-                child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
+
+          Positioned(
+            left: 250 * widthRatio,   // size box toptop
+            top: 40 * heightRatio,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
+              ),
+              child: SizedBox(
+                width: 85 * widthRatio,
+                height: 50 * heightRatio,
+                child: Image.asset(
+                  'assets/images/logo_toptop.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+
           Positioned(
             left: (375 * widthRatio - 320 * widthRatio) / 2,   // sizebox #3
             top: 120 * heightRatio,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'toptop.dart';
 import 'pro_home.dart';
+import 'toptop.dart';
 
 class PageSelect extends StatelessWidget {
   const PageSelect({super.key});
@@ -30,7 +31,7 @@ class PageSelect extends StatelessWidget {
           ),
           Positioned(
             left: (375 * widthRatio - 300 * widthRatio) / 2,
-            top: 120 * heightRatio,
+            top: 240 * heightRatio,   // size box toptop
             child: SizedBox(
               width: 300 * widthRatio,
               height: 100 * heightRatio,
@@ -48,14 +49,14 @@ class PageSelect extends StatelessWidget {
           ),
           Positioned(
             left: (375 * widthRatio - 300 * widthRatio) / 2,
-            top: 240 * heightRatio,
+            top: 120 * heightRatio,   // size box toptop
             child: SizedBox(
               width: 300 * widthRatio,
               height: 100 * heightRatio,
               child: GestureDetector(
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Page1()),
+                  MaterialPageRoute(builder: (context) => const Toptop()),
                 ),
                 child: Image.asset(
                   'assets/images/bar_simple.png',

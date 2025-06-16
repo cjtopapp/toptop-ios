@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'page_select.dart';
-import 'toptop.dart';
 import 'pro_adm.dart';
 import 'pro_faq.dart';
 import 'pro_hospital.dart';
+import 'toptop.dart';
 
 class ProHome extends StatefulWidget {
   const ProHome({super.key});
@@ -105,11 +105,15 @@ class _ProHomeState extends State<ProHome> {
                 ),
               ),
             ),
+
           Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
+            left: 40 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageSelect())),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const PageSelect()),
+              ),
               child: SizedBox(
                 width: 200 * widthRatio,
                 height: 50 * heightRatio,
@@ -120,6 +124,26 @@ class _ProHomeState extends State<ProHome> {
               ),
             ),
           ),
+
+          Positioned(
+            left: 250 * widthRatio,   // size box toptop
+            top: 40 * heightRatio,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
+              ),
+              child: SizedBox(
+                width: 85 * widthRatio,
+                height: 50 * heightRatio,
+                child: Image.asset(
+                  'assets/images/logo_toptop.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+
           Positioned(
             left: 10 * widthRatio,
             top: 560 * heightRatio,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'page_select.dart';
+import 'toptop.dart';
 
 class PageDx extends StatefulWidget {
   const PageDx({super.key});
@@ -47,8 +48,9 @@ class _PageDxState extends State<PageDx> {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+
           Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
+            left: 40 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
               onTap: () => Navigator.push(
@@ -65,6 +67,26 @@ class _PageDxState extends State<PageDx> {
               ),
             ),
           ),
+
+          Positioned(
+            left: 250 * widthRatio,   // size box toptop
+            top: 40 * heightRatio,
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
+              ),
+              child: SizedBox(
+                width: 85 * widthRatio,
+                height: 50 * heightRatio,
+                child: Image.asset(
+                  'assets/images/logo_toptop.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+
           Positioned(
             left: 290 * widthRatio,
             top: 580 * heightRatio,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'page_select.dart';
 import 'pro_hospital.dart';
+import 'toptop.dart';
 
 bool showDetailOnly = false;
 
@@ -90,13 +91,14 @@ class _PageOS2State extends State<PageOS2> {
                   : const SizedBox.shrink(),
             ),
           ),
+
           Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // sizebox #3
+            left: 40 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.pushReplacement(
+              onTap: () => Navigator.pushReplacement(   // size box toptop
                 context,
-                MaterialPageRoute(builder: (_) => const PageSelect()),
+                MaterialPageRoute(builder: (context) => const PageSelect()),
               ),
               child: SizedBox(
                 width: 200 * widthRatio,
@@ -108,6 +110,26 @@ class _PageOS2State extends State<PageOS2> {
               ),
             ),
           ),
+
+          Positioned(
+            left: 250 * widthRatio,   // size box toptop
+            top: 40 * heightRatio,
+            child: GestureDetector(
+              onTap: () => Navigator.pushReplacement(   // size box toptop
+                context,
+                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
+              ),
+              child: SizedBox(
+                width: 85 * widthRatio,
+                height: 50 * heightRatio,
+                child: Image.asset(
+                  'assets/images/logo_toptop.png',
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+
           Positioned(
             left: 290 * widthRatio,
             top: 580 * heightRatio,
