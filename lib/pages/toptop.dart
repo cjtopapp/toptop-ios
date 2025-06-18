@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'page_select.dart';
 import 'flask.dart';
 import 'toptop.dart';
@@ -17,14 +19,35 @@ class _ToptopState extends State<Toptop> {
   int remaining = 200;
   String? _imageUrl;
 
+  List<Map<String, String>> conversationHistory = [];
   @override
   void initState() {
     super.initState();
+    _loadHistory();
     _controller.addListener(() {
       setState(() {
         remaining = 200 - _controller.text.length;
       });
     });
+  }
+
+  Future<void> _loadHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    final historyJson = prefs.getString('chat_history');
+    if (historyJson != null) {
+      conversationHistory = List<Map<String, String>>.from(
+          (jsonDecode(historyJson) as List).map((item) => Map<String, String>.from(item))
+      );
+    }
+  }
+
+  Future<void> _saveHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    const int maxHistoryLength = 20;
+    if (conversationHistory.length > maxHistoryLength) {
+      conversationHistory = conversationHistory.sublist(conversationHistory.length - maxHistoryLength);
+    }
+    await prefs.setString('chat_history', jsonEncode(conversationHistory));
   }
 
   @override
@@ -36,105 +59,117 @@ class _ToptopState extends State<Toptop> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-        body: GestureDetector(
+      body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
-        children: [
-          _imageUrl == null
-              ? Positioned(
-            left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
-            top: 40 * heightRatio,
-            child: SizedBox(
-              width: 200 * widthRatio,
-              height: 200 * heightRatio,
-              child: Image.asset('assets/images/toptop.png', fit: BoxFit.contain),
-            ),
-          )
-              : Positioned(
-            left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
-            top: 40 * heightRatio,
-            child: SizedBox(
-              width: 335 * widthRatio,
-              height: 200 * heightRatio,
-              child: Image.network(_imageUrl!, fit: BoxFit.cover),
-            ),
-          ),
-          Positioned(
-            left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
-            top: 260 * heightRatio,
-            child: SizedBox(
-              width: 335 * widthRatio,
-              height: 200 * heightRatio,
-              child: Stack(
-                children: [
-                  TextField(
-                    controller: _controller,
-                    maxLength: 200,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    expands: true,
-                    maxLines: null,
-                    decoration: InputDecoration(
-                      hintText: isAnswered ? "" : "질문을 입력하세요",
-                      counterText: "",
-                      contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF225095), width: 2.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF225095), width: 2.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF268eb0), width: 2.0),
-                      ),
-                    ),
-                    readOnly: isAnswered,
-                  ),
-                  Positioned(
-                    bottom: 8,
-                    left: 12,
-                    child: Text(
-                      isAnswered ? "" : "($remaining / 200)",
-                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                    ),
-                  ),
-                ],
+          children: [
+            _imageUrl == null
+                ? Positioned(
+              left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
+              top: 40 * heightRatio,
+              child: SizedBox(
+                width: 200 * widthRatio,
+                height: 200 * heightRatio,
+                child: Image.asset('assets/images/toptop.png', fit: BoxFit.contain),
+              ),
+            )
+                : Positioned(
+              left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
+              top: 40 * heightRatio,
+              child: SizedBox(
+                width: 335 * widthRatio,
+                height: 200 * heightRatio,
+                child: Image.network(_imageUrl!, fit: BoxFit.cover),
               ),
             ),
-          ),
-          Positioned(
-            left: 300 * widthRatio,
-            top: 400 * heightRatio,
-            child: GestureDetector(
-              onTap: () async {
-                if (!isAnswered) {
-                  if (_controller.text.trim().isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("질문을 입력해 주세요."),
-                        duration: Duration(seconds: 2),
+            Positioned(
+              left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
+              top: 260 * heightRatio,
+              child: SizedBox(
+                width: 335 * widthRatio,
+                height: 200 * heightRatio,
+                child: Stack(
+                  children: [
+                    TextField(
+                      controller: _controller,
+                      maxLength: 200,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      expands: true,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                        hintText: isAnswered ? "" : "질문을 입력하세요",
+                        counterText: "",
+                        contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF225095), width: 2.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF225095), width: 2.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF268eb0), width: 2.0),
+                        ),
                       ),
-                    );
-                    return;
+                      readOnly: isAnswered,
+                    ),
+                    Positioned(
+                      bottom: 8,
+                      left: 12,
+                      child: Text(
+                        isAnswered ? "" : "($remaining / 200)",
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Positioned(
+              left: 300 * widthRatio,
+              top: 400 * heightRatio,
+              child: GestureDetector(
+
+                onTap: () async {
+                  if (!isAnswered) {
+                    if (_controller.text.trim().isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("질문을 입력해 주세요.")),
+                      );
+                      return;
+                    }
+
+                    final userQuestion = _controller.text;
+
+                    setState(() {
+                      isLoading = true;
+                      conversationHistory.add({"role": "user", "content": userQuestion});
+                    });
+
+                    final result = await FlaskAPI.fetchToptopAnswer(userQuestion, conversationHistory);
+                    final assistantAnswer = result['answer'];
+
+                    setState(() {
+                      _controller.text = assistantAnswer;
+                      _imageUrl = result['image'];
+                      isAnswered = true;
+                      isLoading = false;
+                      conversationHistory.add({"role": "assistant", "content": assistantAnswer});
+                    });
+
+                    await _saveHistory();
+
+                  } else {
+                    setState(() {
+                      _controller.clear();
+                      _imageUrl = null;
+                      isAnswered = false;
+                      remaining = 200;
+                    });
                   }
-                  setState(() => isLoading = true);
-                  final result = await FlaskAPI.fetchToptopAnswer(_controller.text);
-                  setState(() {
-                    _controller.text = result['answer'];
-                    _imageUrl = result['image'];
-                    isAnswered = true;
-                    isLoading = false;
-                  });
-                } else {
-                  setState(() {
-                    _controller.clear();
-                    _imageUrl = null;
-                    isAnswered = false;
-                    remaining = 200;
-                  });
-                }
-              },
+                },
               child: SizedBox(
                 width: 50 * widthRatio,
                 height: 50 * heightRatio,

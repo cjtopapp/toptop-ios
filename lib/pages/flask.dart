@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'toptop.dart';
 
 class FlaskAPI {
   static const String _url = 'https://toptop-lsq0.onrender.com/ask';
 
-  static Future<Map<String, dynamic>> fetchToptopAnswer(String question) async {
+  static Future<Map<String, dynamic>> fetchToptopAnswer(String question, List<Map<String, String>> history) async {
     try {
       final response = await http.post(
         Uri.parse(_url),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'question': question}),
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: jsonEncode({
+          'question': question,
+          'history': history,
+        }),
       );
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = jsonDecode(utf8.decode(response.bodyBytes));
         return {
           'answer': data['answer'] ?? '탑탑이가 아직 컨디션이 안 좋아서 대답을 못 했어요…',
           'image': data['image']
