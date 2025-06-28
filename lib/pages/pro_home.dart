@@ -6,6 +6,8 @@ import 'pro_adm.dart';
 import 'pro_faq.dart';
 import 'pro_hospital.dart';
 import 'toptop.dart';
+import 'page_table.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';   // 2.0.5_g
 
 class ProHome extends StatefulWidget {
   const ProHome({super.key});
@@ -16,7 +18,7 @@ class ProHome extends StatefulWidget {
 class _ProHomeState extends State<ProHome> {
   late VideoPlayerController _videoController;
   bool showScroll = true;
-  bool showImageSchedule = false;
+  bool _showNetworkWarning = false;   // 2.0.5_g
 
   @override
   void initState() {
@@ -33,18 +35,42 @@ class _ProHomeState extends State<ProHome> {
     });
   }
 
+// 2.0.5_g
   @override
   void dispose() {
     _videoController.dispose();
     super.dispose();
   }
-
-  void toggleImageSchedule() => setState(() => showImageSchedule = !showImageSchedule);
-
   void launchLink(String url) async {
-    Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) await launchUrl(uri);
+    final Uri uri = Uri.parse(url);
+    if (uri.scheme == 'http' || uri.scheme == 'https') {
+      final connectivityResult = await (Connectivity().checkConnectivity());
+      final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+                          connectivityResult.contains(ConnectivityResult.wifi);
+
+      if (isConnected) {
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
+        }
+      } else {
+        setState(() {
+          _showNetworkWarning = true;
+        });
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) {
+            setState(() {
+              _showNetworkWarning = false;
+            });
+          }
+        });
+      }
+    } else {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      }
+    }
   }
+  // 2.0.5_g
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +187,7 @@ class _ProHomeState extends State<ProHome> {
             left: 135 * widthRatio,
             top: 560 * heightRatio,
             child: GestureDetector(
-              onTap: toggleImageSchedule,
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageTable())),   // 2.0.6
               child: Image.asset(
                 'assets/images/banner_schedule.png',
                 width: 105 * widthRatio,
@@ -185,6 +211,20 @@ class _ProHomeState extends State<ProHome> {
               ),
             ),
           ),
+
+          // 2.0.5_g
+          if (_showNetworkWarning)
+            Positioned(
+              left: (375 * widthRatio - 150 * widthRatio) / 2,
+              top: 330 * heightRatio,
+              child: SizedBox(
+                width: 150 * widthRatio,
+                height: 150 * heightRatio,
+                child: Image.asset('assets/images/scroll_network.png', fit: BoxFit.contain),
+              ),
+            ),
+          // 2.0.5_g  
+
           Positioned(
             left: 0 * widthRatio,
             top: 605 * heightRatio,  // size mix
@@ -242,22 +282,6 @@ class _ProHomeState extends State<ProHome> {
               ),
             ),
           ),
-          if (showImageSchedule)
-            Positioned(
-              left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #3
-              top: 100 * heightRatio,   // size box #3
-              child: GestureDetector(
-                onTap: toggleImageSchedule,
-                child: SizedBox(
-                  width: 340 * widthRatio,   // size box #3
-                  height: 500 * heightRatio,   // size box #3
-                  child: Image.asset(
-                    'assets/images/image_schedule.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );

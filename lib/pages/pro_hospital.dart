@@ -8,6 +8,7 @@ import 'page_NS1.dart';
 import 'page_NS2.dart';
 import 'page_OS1.dart';
 import 'page_OS2.dart';
+import 'page_OS3.dart';
 import 'page_mri.dart';
 import 'page_pt.dart';
 import 'toptop.dart';
@@ -199,6 +200,10 @@ class _ProHospitalState extends State<ProHospital> {
                     GestureDetector(
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageNS2())),
                       child: Image.asset('assets/images/open_NS2.png', fit: BoxFit.contain),
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageOS3())),
+                      child: Image.asset('assets/images/open_OS3.png', fit: BoxFit.contain),
                     ),
                     GestureDetector(
                       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PageMri())),

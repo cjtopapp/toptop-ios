@@ -13,6 +13,7 @@ import 'pages/page_NS1.dart';
 import 'pages/page_NS2.dart';
 import 'pages/page_OS1.dart';
 import 'pages/page_OS2.dart';
+import 'pages/page_OS3.dart';   // 2.0.6
 
 void main() => runApp(const MyApp());
 

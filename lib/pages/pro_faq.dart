@@ -6,6 +6,7 @@ import 'pro_home.dart';
 import 'pro_hospital.dart';
 import 'pro_adm.dart';
 import 'toptop.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';   // 2.0.5_g
 
 class ProFaq extends StatefulWidget {
   const ProFaq({super.key});
@@ -16,6 +17,7 @@ class ProFaq extends StatefulWidget {
 class _ProFaqState extends State<ProFaq> {
   late VideoPlayerController _controller;
   bool showScroll = true;
+  bool _showNetworkWarning = false;   // 2.0.5_g
 
   @override
   void initState() {
@@ -39,10 +41,30 @@ class _ProFaqState extends State<ProFaq> {
     super.dispose();
   }
 
+// 2.0.5_g
   void launchLink(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) await launchUrl(uri);
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+                        connectivityResult.contains(ConnectivityResult.wifi);
+    if (isConnected) {
+      final uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      }
+    } else {
+      setState(() {
+        _showNetworkWarning = true;
+      });
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() {
+            _showNetworkWarning = false;
+          });
+        }
+      });
+    }
   }
+// 2.0.5_g
 
   Widget banner(String asset, String url) => GestureDetector(
     onTap: () => launchLink(url),
@@ -152,6 +174,20 @@ class _ProFaqState extends State<ProFaq> {
                 child: Image.asset('assets/images/scroll_updown.png', fit: BoxFit.contain),
               ),
             ),
+
+          // 2.0.5_g
+          if (_showNetworkWarning)
+            Positioned(
+              left: (375 * widthRatio - 150 * widthRatio) / 2,
+              top: 330 * heightRatio,
+              child: SizedBox(
+                width: 150 * widthRatio,
+                height: 150 * heightRatio,
+                child: Image.asset('assets/images/scroll_network.png', fit: BoxFit.contain),
+              ),
+            ),
+          // 2.0.5_g  
+
           Positioned(
             left: 0 * widthRatio,
             top: 605 * heightRatio,  // size mix

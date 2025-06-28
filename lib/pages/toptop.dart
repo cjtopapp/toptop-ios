@@ -97,7 +97,7 @@ class _ToptopState extends State<Toptop> {
                       expands: true,
                       maxLines: null,
                       decoration: InputDecoration(
-                        hintText: isAnswered ? "" : "질문을 입력하세요",
+                        hintText: isAnswered ? "" : "질문을 입력하세요   예시) 청주탑병원이 어디야?",   // 2.0.6
                         counterText: "",
                         contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                         filled: true,
