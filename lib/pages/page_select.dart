@@ -18,11 +18,11 @@ class PageSelect extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            left: -5 * widthRatio,
-            top: 370 * heightRatio,
+            left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #4
+            top: 400 * heightRatio,   // size box #4
             child: SizedBox(
-              width: 380 * widthRatio,
-              height: 300 * heightRatio,
+              width: 340 * widthRatio,
+              height: 200 * heightRatio,
               child: Image.asset(
                 'assets/images/tophospital.png',
                 fit: BoxFit.contain,
@@ -31,7 +31,7 @@ class PageSelect extends StatelessWidget {
           ),
           Positioned(
             left: (375 * widthRatio - 300 * widthRatio) / 2,
-            top: 240 * heightRatio,   // size box toptop
+            top: 120 * heightRatio,   // size box toptop
             child: SizedBox(
               width: 300 * widthRatio,
               height: 100 * heightRatio,
@@ -49,7 +49,7 @@ class PageSelect extends StatelessWidget {
           ),
           Positioned(
             left: (375 * widthRatio - 300 * widthRatio) / 2,
-            top: 120 * heightRatio,   // size box toptop
+            top: 240 * heightRatio,   // size box toptop
             child: SizedBox(
               width: 300 * widthRatio,
               height: 100 * heightRatio,

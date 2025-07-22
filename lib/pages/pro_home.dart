@@ -97,6 +97,7 @@ class _ProHomeState extends State<ProHome> {
             )
                 : const SizedBox.shrink(),
           ),
+          
           Positioned(
             left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
             top: 310 * heightRatio,   // size box #3
@@ -107,10 +108,24 @@ class _ProHomeState extends State<ProHome> {
                 child: Column(
                   children: [
                     GestureDetector(
-                      child: Image.asset(
-                        'assets/images/4doc.png',
-                        fit: BoxFit.contain,
-                      ),
+                      onTap: () => launchLink('https://www.youtube.com/watch?v=8jmPpfxQZm8'),
+                      child: Image.asset('assets/images/youtube_cervical.png', fit: BoxFit.contain),
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink('https://www.youtube.com/watch?v=x8KRLBqDwIM'),
+                      child: Image.asset('assets/images/youtube_wrist.png', fit: BoxFit.contain),
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink('https://www.youtube.com/watch?v=KH0xPpMb14g'),
+                      child: Image.asset('assets/images/youtube_elbow.png', fit: BoxFit.contain),
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink('https://www.youtube.com/watch?v=8oCsA5yG5tw'),
+                      child: Image.asset('assets/images/youtube_knee.png', fit: BoxFit.contain),
+                    ),
+                    GestureDetector(
+                      onTap: () => launchLink('https://www.youtube.com/watch?v=TodbX412D-o'),
+                      child: Image.asset('assets/images/youtube_lumbar.png', fit: BoxFit.contain),
                     ),
                     const SizedBox(height: 30),
                   ],
@@ -118,6 +133,7 @@ class _ProHomeState extends State<ProHome> {
               ),
             ),
           ),
+
           if (showScroll)
             Positioned(
               left: (375 * widthRatio - 150 * widthRatio) / 2,   // size box #3
