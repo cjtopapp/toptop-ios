@@ -44,13 +44,17 @@ class _ProHomeState extends State<ProHome> {
   void launchLink(String url) async {
     final Uri uri = Uri.parse(url);
     if (uri.scheme == 'http' || uri.scheme == 'https') {
-      final connectivityResult = await (Connectivity().checkConnectivity());
-      final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
-                          connectivityResult.contains(ConnectivityResult.wifi);
+      // final connectivityResult = await (Connectivity().checkConnectivity());
+      // final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+      //                     connectivityResult.contains(ConnectivityResult.wifi);
+      final connectivityResult = await Connectivity().checkConnectivity();   // 2.1.0
+      final isConnected = connectivityResult == ConnectivityResult.mobile ||   // 2.1.0
+                          connectivityResult == ConnectivityResult.wifi;   // 2.1.0
 
       if (isConnected) {
         if (await canLaunchUrl(uri)) {
-          await launchUrl(uri);
+          //await launchUrl(uri);
+          await launchUrl(uri, mode: LaunchMode.externalApplication);   // 2.1.0
         }
       } else {
         setState(() {
@@ -66,7 +70,8 @@ class _ProHomeState extends State<ProHome> {
       }
     } else {
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
+        //await launchUrl(uri);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);   // 2.1.0
       }
     }
   }

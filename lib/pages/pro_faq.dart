@@ -43,13 +43,17 @@ class _ProFaqState extends State<ProFaq> {
 
 // 2.0.5_g
   void launchLink(String url) async {
-    final connectivityResult = await (Connectivity().checkConnectivity());
-    final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
-                        connectivityResult.contains(ConnectivityResult.wifi);
+    // final connectivityResult = await (Connectivity().checkConnectivity());
+    // final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+    //                     connectivityResult.contains(ConnectivityResult.wifi);
+    final connectivityResult = await Connectivity().checkConnectivity();   // 2.1.0
+    final isConnected = connectivityResult == ConnectivityResult.mobile ||   // 2.1.0
+                        connectivityResult == ConnectivityResult.wifi;   // 2.1.0
     if (isConnected) {
       final uri = Uri.parse(url);
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
+        //await launchUrl(uri);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);  // 2.1.0
       }
     } else {
       setState(() {

@@ -10,8 +10,10 @@ plugins {
 
 android {
     namespace = "com.cjtoph.app.cjtoph"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    //compileSdk = flutter.compileSdkVersion
+    compileSdk = 36   // 2.1.0
+    //ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"   // 2.1.0
 
     signingConfigs {
         create("release") {

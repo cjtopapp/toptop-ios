@@ -15,16 +15,30 @@ import 'pages/page_OS1.dart';
 import 'pages/page_OS2.dart';
 import 'pages/page_OS3.dart';   // 2.0.6
 
+// 2.1.0~
+import 'dart:io' show Platform;
+import 'package:new_version_plus/new_version_plus.dart';
+import 'package:version/version.dart' as v;
+import 'package:in_app_update/in_app_update.dart';
+import 'package:store_redirect/store_redirect.dart';
+// ~2.1.0
+
 void main() => runApp(const MyApp());
 
+// 2.1.0~
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) => const MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: PageOpening(),
+    home: UpdateGate(
+      androidId: 'com.cjtoph.app.cjtoph',
+      iOSAppId: '6746877257',
+      child: const PageOpening(),
+    ),
   );
 }
+// ~2.1.0
 
 class PageOpening extends StatefulWidget {
   const PageOpening({super.key});
@@ -47,13 +61,16 @@ class _PageOpeningState extends State<PageOpening> {
         });
       });
 
+// 2.1.0~
     Future.delayed(const Duration(seconds: 4), () {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const PageSelect()),
       );
     });
   }
+// ~2.1.0
 
   @override
   void dispose() {
@@ -106,5 +123,86 @@ class _PageOpeningState extends State<PageOpening> {
     );
   }
 }
+
+// 2.1.0~
+class UpdateGate extends StatefulWidget {
+  final Widget child;
+  final String androidId;
+  final String iOSAppId;
+  const UpdateGate({
+    super.key,
+    required this.child,
+    required this.androidId,
+    required this.iOSAppId,
+  });
+  @override
+  State<UpdateGate> createState() => _UpdateGateState();
+}
+
+class _UpdateGateState extends State<UpdateGate> {
+  bool _block = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAndGate();
+  }
+
+  Future<void> _checkAndGate() async {
+    if (Platform.isAndroid) {
+      try {
+        final info = await InAppUpdate.checkForUpdate();
+        if (info.updateAvailability == UpdateAvailability.updateAvailable &&
+            info.immediateUpdateAllowed) {
+          await InAppUpdate.performImmediateUpdate();
+        }
+      } catch (_) {}
+    }
+
+    try {
+      final nv = NewVersionPlus(
+        androidId: widget.androidId,
+        iOSId: widget.iOSAppId,
+        iOSAppStoreCountry: 'kr',
+      );
+      final status = await nv.getVersionStatus();
+      if (status == null) return;
+
+      final current = v.Version.parse(status.localVersion);
+      final store = v.Version.parse(status.storeVersion);
+      if (current < store) {
+        if (mounted) setState(() => _block = true);
+      }
+    } catch (_) {}
+  }
+
+  void _goStore() {
+    if (Platform.isIOS) {
+      StoreRedirect.redirect(iOSAppId: widget.iOSAppId);
+    } else {
+      StoreRedirect.redirect(androidAppId: widget.androidId);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_block) return widget.child;
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(
+          child: AlertDialog(
+            title: const Text('업데이트 필요'),
+            content: const Text('앱 업데이트 후 사용하세요.'),
+            actions: [
+              TextButton(onPressed: _goStore, child: const Text('업데이트 이동')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+// ~2.1.0
 
 // git config --global --add safe.directory C:/src -> terminal 오류 시
