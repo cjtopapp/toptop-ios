@@ -206,3 +206,16 @@ class _UpdateGateState extends State<UpdateGate> {
 // ~2.1.0
 
 // git config --global --add safe.directory C:/src -> terminal 오류 시
+
+// 2.1.0 바꾼 것
+// <manifest>
+// android - app - src - main
+//
+// <build.gradle.kts>
+// android - app
+//
+// <gradle.properties>
+// android
+//
+// <setting.gradle.kts>
+// android

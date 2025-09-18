@@ -43,17 +43,13 @@ class _ProFaqState extends State<ProFaq> {
 
 // 2.0.5_g
   void launchLink(String url) async {
-    // final connectivityResult = await (Connectivity().checkConnectivity());
-    // final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
-    //                     connectivityResult.contains(ConnectivityResult.wifi);
-    final connectivityResult = await Connectivity().checkConnectivity();   // 2.1.0
-    final isConnected = connectivityResult == ConnectivityResult.mobile ||   // 2.1.0
-                        connectivityResult == ConnectivityResult.wifi;   // 2.1.0
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+        connectivityResult.contains(ConnectivityResult.wifi);
     if (isConnected) {
       final uri = Uri.parse(url);
       if (await canLaunchUrl(uri)) {
-        //await launchUrl(uri);
-        await launchUrl(uri, mode: LaunchMode.externalApplication);  // 2.1.0
+        await launchUrl(uri);
       }
     } else {
       setState(() {
@@ -227,3 +223,5 @@ class _ProFaqState extends State<ProFaq> {
     );
   }
 }
+
+// 2.1.1 -> 2.1.0 버전 코드 삭제 후 2.0.9 버전으로 롤백

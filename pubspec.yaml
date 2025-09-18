@@ -2,7 +2,7 @@ name: cjtoph
 description: "none"
 publish_to: 'none'
 
-version: 2.1.0+11
+version: 2.1.1+12
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -16,10 +16,10 @@ dependencies:
   http: ^1.4.0
   shared_preferences: ^2.2.3   # toptop_history
   connectivity_plus: ^6.1.4
-  new_version_plus: ^0.1.1
-  version: ^3.0.2
+  new_version_plus: ^0.1.1   # 2.1.0
+  version: ^3.0.2   # 2.1.0
   in_app_update: 4.2.3   # 2.1.0 캐럿 뺌
-  store_redirect: ^2.0.1
+  store_redirect: ^2.0.1   # 2.1.0
 
 dev_dependencies:
   flutter_test:

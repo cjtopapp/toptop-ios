@@ -44,17 +44,13 @@ class _ProHomeState extends State<ProHome> {
   void launchLink(String url) async {
     final Uri uri = Uri.parse(url);
     if (uri.scheme == 'http' || uri.scheme == 'https') {
-      // final connectivityResult = await (Connectivity().checkConnectivity());
-      // final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
-      //                     connectivityResult.contains(ConnectivityResult.wifi);
-      final connectivityResult = await Connectivity().checkConnectivity();   // 2.1.0
-      final isConnected = connectivityResult == ConnectivityResult.mobile ||   // 2.1.0
-                          connectivityResult == ConnectivityResult.wifi;   // 2.1.0
+      final connectivityResult = await (Connectivity().checkConnectivity());
+      final isConnected = connectivityResult.contains(ConnectivityResult.mobile) ||
+          connectivityResult.contains(ConnectivityResult.wifi);
 
       if (isConnected) {
         if (await canLaunchUrl(uri)) {
-          //await launchUrl(uri);
-          await launchUrl(uri, mode: LaunchMode.externalApplication);   // 2.1.0
+          await launchUrl(uri);
         }
       } else {
         setState(() {
@@ -70,8 +66,7 @@ class _ProHomeState extends State<ProHome> {
       }
     } else {
       if (await canLaunchUrl(uri)) {
-        //await launchUrl(uri);
-        await launchUrl(uri, mode: LaunchMode.externalApplication);   // 2.1.0
+        await launchUrl(uri);
       }
     }
   }
@@ -102,7 +97,7 @@ class _ProHomeState extends State<ProHome> {
             )
                 : const SizedBox.shrink(),
           ),
-          
+
           Positioned(
             left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
             top: 310 * heightRatio,   // size box #3
@@ -308,3 +303,5 @@ class _ProHomeState extends State<ProHome> {
     );
   }
 }
+
+// 2.1.1 -> 2.1.0 버전 코드 삭제 후 2.0.9 버전으로 롤백
