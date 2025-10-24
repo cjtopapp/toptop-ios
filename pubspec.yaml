@@ -20,6 +20,7 @@ dependencies:
   version: ^3.0.2   # 2.1.0
   in_app_update: 4.2.3   # 2.1.0 캐럿 뺌
   store_redirect: ^2.0.1   # 2.1.0
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
   flutter_test:

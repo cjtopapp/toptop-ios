@@ -7,6 +7,7 @@ import 'pro_hospital.dart';
 import 'pro_adm.dart';
 import 'toptop.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';   // 2.0.5_g
+import 'reservation_webview.dart';
 
 class ProFaq extends StatefulWidget {
   const ProFaq({super.key});
@@ -34,6 +35,22 @@ class _ProFaqState extends State<ProFaq> {
       if (mounted) setState(() => showScroll = false);
     });
   }
+
+// reserve   // 2.1.2
+  void _showReservationModal(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: const ReservationWebView(),
+        );
+      },
+    );
+  }
+// reserve   // 2.1.2
 
   @override
   void dispose() {
@@ -145,14 +162,12 @@ class _ProFaqState extends State<ProFaq> {
             ),
           ),
 
+// reserve   // 2.1.2
           Positioned(
             left: 250 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
-              ),
+              onTap: () => _showReservationModal(context),  // ← 변경됨
               child: SizedBox(
                 width: 85 * widthRatio,
                 height: 50 * heightRatio,
@@ -163,6 +178,7 @@ class _ProFaqState extends State<ProFaq> {
               ),
             ),
           ),
+// reserve   // 2.1.2
 
           if (showScroll)
             Positioned(

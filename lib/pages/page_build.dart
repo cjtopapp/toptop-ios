@@ -3,6 +3,7 @@ import 'package:video_player/video_player.dart';
 import 'page_select.dart';
 import 'pro_adm.dart';
 import 'toptop.dart';
+import 'reservation_webview.dart';
 
 class PageBuild extends StatefulWidget {
   const PageBuild({super.key});
@@ -16,6 +17,22 @@ class _PageBuildState extends State<PageBuild> {
   bool videoVisible = false;
   bool buttonsVisible = true;
   bool showCloseButton = false;
+
+// reserve   // 2.1.2
+  void _showReservationModal(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: const ReservationWebView(),
+        );
+      },
+    );
+  }
+// reserve   // 2.1.2
 
   void playVideo(String videoFile) {
     setState(() {
@@ -141,14 +158,12 @@ class _PageBuildState extends State<PageBuild> {
             ),
           ),
 
+// reserve   // 2.1.2
           Positioned(
             left: 250 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
-              ),
+              onTap: () => _showReservationModal(context),  // ← 변경됨
               child: SizedBox(
                 width: 85 * widthRatio,
                 height: 50 * heightRatio,
@@ -159,6 +174,7 @@ class _PageBuildState extends State<PageBuild> {
               ),
             ),
           ),
+// reserve   // 2.1.2
 
           Positioned(
             left: 290 * widthRatio,

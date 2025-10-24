@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'page_select.dart';
 import 'pro_hospital.dart';
 import 'toptop.dart';
+import 'reservation_webview.dart';
 
 class PagePt extends StatefulWidget {
   const PagePt({super.key});
@@ -19,6 +20,22 @@ class _PagePtState extends State<PagePt> {
       if (mounted) setState(() => showScroll = false);
     });
   }
+
+// reserve   // 2.1.2
+  void _showReservationModal(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: const ReservationWebView(),
+        );
+      },
+    );
+  }
+// reserve   // 2.1.2
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +68,12 @@ class _PagePtState extends State<PagePt> {
             ),
           ),
 
+// reserve   // 2.1.2
           Positioned(
             left: 250 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
-              ),
+              onTap: () => _showReservationModal(context),  // ← 변경됨
               child: SizedBox(
                 width: 85 * widthRatio,
                 height: 50 * heightRatio,
@@ -69,6 +84,7 @@ class _PagePtState extends State<PagePt> {
               ),
             ),
           ),
+// reserve   // 2.1.2
 
           Positioned(
             left: (375 * widthRatio - 350 * widthRatio) / 2,

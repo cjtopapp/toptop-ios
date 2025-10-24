@@ -12,6 +12,7 @@ import 'page_OS3.dart';
 import 'page_mri.dart';
 import 'page_pt.dart';
 import 'toptop.dart';
+import 'reservation_webview.dart';
 
 class ProHospital extends StatefulWidget {
   const ProHospital({super.key});
@@ -39,6 +40,22 @@ class _ProHospitalState extends State<ProHospital> {
       }
     });
   }
+
+// reserve   // 2.1.2
+  void _showReservationModal(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: EdgeInsets.zero,
+          child: const ReservationWebView(),
+        );
+      },
+    );
+  }
+// reserve   // 2.1.2
 
   @override
   void dispose() {
@@ -77,14 +94,12 @@ class _ProHospitalState extends State<ProHospital> {
             ),
           ),
 
+// reserve   // 2.1.2
           Positioned(
             left: 250 * widthRatio,   // size box toptop
             top: 40 * heightRatio,
             child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Toptop()),   // size box toptop
-              ),
+              onTap: () => _showReservationModal(context),  // ← 변경됨
               child: SizedBox(
                 width: 85 * widthRatio,
                 height: 50 * heightRatio,
@@ -95,6 +110,7 @@ class _ProHospitalState extends State<ProHospital> {
               ),
             ),
           ),
+// reserve   // 2.1.2
 
           Positioned(
             left: (375 * widthRatio - 320 * widthRatio) / 2,   // size box #3
