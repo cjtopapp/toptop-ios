@@ -53,7 +53,7 @@ class _ReservationWebViewState extends State<ReservationWebView> {
                 <input type="text" name="wr_name" id="wr_name" placeholder="홍길동" required="">
                 
                 <label for="wr_2" class="tit">연락처</label>
-                <input type="tel" name="wr_2" id="wr_2" placeholder="010-1234-5678" required="">
+                <input type="text" name="wr_2" id="wr_2" placeholder="010-1234-5678" required="">
                 
                 <label for="wr_3" class="date-label tit">생년월일</label>
                 <input type="text" name="wr_3" id="wr_3" class="datepicker" placeholder="1980년 1월 1일" readonly required="">
@@ -69,7 +69,7 @@ class _ReservationWebViewState extends State<ReservationWebView> {
             </div>
         
             <p style="color: #db350b; font-size: 14px; font-weight: 500; margin: 10px 0;">※ 온라인 예약은 병원 콜센터 통화 후 완료됩니다.</p>
-            <p style="color: #db350b; font-size: 14px; font-weight: 500; margin: 10px 0;">※ 공휴일 및 일요일 상담신청 시 정상 근무시간에 순차적으로 연락드립니다.</p>
+            <p style="color: #db350b; font-size: 14px; font-weight: 500; margin: 10px 0 20px 0;">※ 공휴일 및 일요일 상담신청 시 정상 근무시간에 순차적으로 연락드립니다.</p>
             
             <button type="submit">예약 신청</button>
         </form>
@@ -180,16 +180,20 @@ class _ReservationWebViewState extends State<ReservationWebView> {
         height: 100%;
     }
     
+    /* v2.1.4: 박스핏 레이아웃 + 하단 공백 최소화 */
     .modal-content {
         background-color: #ffffff;
-        padding: 20px;
+        padding: 20px 20px 10px 20px;
         width: 100%;
         max-width: 100%;
+        height: 85vh;
+        max-height: 85vh;
         border-radius: 16px;
         box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
-        max-height: 90vh;
         overflow-y: auto;
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
     
     .modal-content h2 {
@@ -197,6 +201,7 @@ class _ReservationWebViewState extends State<ReservationWebView> {
         font-size: 20px;
         margin-bottom: 8px;
         padding-right: 30px;
+        flex-shrink: 0;
     }
     
     .close {
@@ -214,10 +219,17 @@ class _ReservationWebViewState extends State<ReservationWebView> {
         display: flex;
         align-items: center;
         justify-content: center;
+        z-index: 10;
     }
     
     .close:hover { 
         color: #333; 
+    }
+    
+    .form_item {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
     }
     
     .form_item input, 
@@ -244,31 +256,39 @@ class _ReservationWebViewState extends State<ReservationWebView> {
         font-family: inherit;
     }
     
-    .form_item button {
+    /* v2.1.4: 예약 신청 버튼 크기 증가 + 중앙 정렬 */
+    .form_item button,
+    button[type="submit"] {
         background-color: #01b4ff;
         color: white;
         border: none;
-        padding: 14px 20px;
+        padding: 16px 20px;
         cursor: pointer;
         border-radius: 8px;
-        font-size: 16px;
-        margin-top: 20px;
-        width: 100%;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: 700;
+        width: 90%;
+        max-width: 400px;
+        margin: 15px auto 20px auto;
+        display: block;
         transition: background-color 0.2s;
+        flex-shrink: 0;
     }
     
-    .form_item button:hover {
+    .form_item button:hover,
+    button[type="submit"]:hover {
         background-color: #0282cc;
     }
     
-    .form_item button:active {
+    .form_item button:active,
+    button[type="submit"]:active {
         transform: scale(0.98);
     }
     
     .terms {
         margin-top: 15px;
         margin-bottom: 10px;
+        flex-shrink: 0;
     }
     
     .datepicker {
@@ -277,16 +297,19 @@ class _ReservationWebViewState extends State<ReservationWebView> {
     }
     
     /* 스크롤바 스타일 */
-    .modal-content::-webkit-scrollbar {
+    .modal-content::-webkit-scrollbar,
+    .form_item::-webkit-scrollbar {
         width: 6px;
     }
     
-    .modal-content::-webkit-scrollbar-track {
+    .modal-content::-webkit-scrollbar-track,
+    .form_item::-webkit-scrollbar-track {
         background: #f1f1f1;
         border-radius: 10px;
     }
     
-    .modal-content::-webkit-scrollbar-thumb {
+    .modal-content::-webkit-scrollbar-thumb,
+    .form_item::-webkit-scrollbar-thumb {
         background: #01b4ff;
         border-radius: 10px;
     }
