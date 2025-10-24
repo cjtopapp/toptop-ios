@@ -37,7 +37,7 @@ class _ReservationWebViewState extends State<ReservationWebView> {
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta charset="UTF-8">
 </head>
 <body style="margin:0; padding:0; background-color: rgba(0, 0, 0, 0.5);">
@@ -56,7 +56,8 @@ class _ReservationWebViewState extends State<ReservationWebView> {
                 <input type="tel" name="wr_2" id="wr_2" placeholder="010-1234-5678" required="">
                 
                 <label for="wr_3" class="date-label tit">생년월일</label>
-                <input type="date" name="wr_3" id="wr_3" class="datepicker" value="1980-01-01" required="">
+                <input type="text" name="wr_3" id="wr_3" class="datepicker" placeholder="1980년 1월 1일" readonly required="">
+                <input type="hidden" id="wr_3_value" value="1980-01-01">
                 
                 <label for="wr_4" class="tit">진료 예약 내용</label>
                 <textarea name="wr_4" id="wr_4" placeholder="진료 예약 내용을 입력하세요." required=""></textarea>
@@ -72,6 +73,28 @@ class _ReservationWebViewState extends State<ReservationWebView> {
             
             <button type="submit">예약 신청</button>
         </form>
+    </div>
+</div>
+
+<!-- 커스텀 한글 날짜 선택기 -->
+<div id="datePickerModal" class="date-picker-modal" style="display: none;">
+    <div class="date-picker-content">
+        <div class="date-picker-header">
+            <button type="button" class="date-picker-btn" onclick="closeDatePicker()">취소</button>
+            <span>생년월일 선택</span>
+            <button type="button" class="date-picker-btn primary" onclick="confirmDatePicker()">확인</button>
+        </div>
+        <div class="date-picker-body">
+            <div class="picker-column">
+                <div id="yearPicker" class="picker-scroll"></div>
+            </div>
+            <div class="picker-column">
+                <div id="monthPicker" class="picker-scroll"></div>
+            </div>
+            <div class="picker-column">
+                <div id="dayPicker" class="picker-scroll"></div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -159,9 +182,9 @@ class _ReservationWebViewState extends State<ReservationWebView> {
     
     .modal-content {
         background-color: #ffffff;
-        padding: 25px;
-        width: 92%;
-        max-width: 480px;
+        padding: 20px;
+        width: 100%;
+        max-width: 100%;
         border-radius: 16px;
         box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
         max-height: 90vh;
@@ -250,6 +273,7 @@ class _ReservationWebViewState extends State<ReservationWebView> {
     
     .datepicker {
         cursor: pointer !important;
+        background-color: white;
     }
     
     /* 스크롤바 스타일 */
@@ -266,26 +290,202 @@ class _ReservationWebViewState extends State<ReservationWebView> {
         background: #01b4ff;
         border-radius: 10px;
     }
+    
+    /* 한글 날짜 선택기 스타일 */
+    .date-picker-modal {
+        position: fixed;
+        z-index: 200000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    
+    .date-picker-content {
+        background-color: white;
+        width: 100%;
+        max-height: 50vh;
+        border-radius: 16px 16px 0 0;
+        overflow: hidden;
+    }
+    
+    .date-picker-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #ddd;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    
+    .date-picker-btn {
+        background: none;
+        border: none;
+        color: #01b4ff;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 5px 10px;
+    }
+    
+    .date-picker-btn.primary {
+        font-weight: 600;
+    }
+    
+    .date-picker-body {
+        display: flex;
+        padding: 20px 0;
+        height: 250px;
+        overflow: hidden;
+    }
+    
+    .picker-column {
+        flex: 1;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+    }
+    
+    .picker-scroll {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .picker-item {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        scroll-snap-align: center;
+    }
+    
+    .picker-item.selected {
+        font-weight: 600;
+        color: #01b4ff;
+        font-size: 18px;
+    }
+    
+    .picker-column::-webkit-scrollbar {
+        width: 0;
+    }
 </style>
 
 <script>
+let selectedYear = 1980;
+let selectedMonth = 1;
+let selectedDay = 1;
+
+const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+
 function closeModal() {
     if (window.FlutterClose) {
         FlutterClose.postMessage('close');
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const dateInput = document.querySelector('.datepicker');
-    if (dateInput) {
-        dateInput.addEventListener('focus', function() {
-            try {
-                this.showPicker();
-            } catch(e) {
-                console.log('showPicker not supported');
-            }
-        });
+function openDatePicker() {
+    document.getElementById('datePickerModal').style.display = 'flex';
+    initDatePicker();
+}
+
+function closeDatePicker() {
+    document.getElementById('datePickerModal').style.display = 'none';
+}
+
+function confirmDatePicker() {
+    const displayText = selectedYear + '년 ' + selectedMonth + '월 ' + selectedDay + '일';
+    const valueText = selectedYear + '-' + String(selectedMonth).padStart(2, '0') + '-' + String(selectedDay).padStart(2, '0');
+    
+    document.getElementById('wr_3').value = displayText;
+    document.getElementById('wr_3_value').value = valueText;
+    closeDatePicker();
+}
+
+function initDatePicker() {
+    const yearPicker = document.getElementById('yearPicker');
+    const monthPicker = document.getElementById('monthPicker');
+    const dayPicker = document.getElementById('dayPicker');
+    
+    // 연도 (1940 ~ 2024)
+    yearPicker.innerHTML = '';
+    for (let i = 1940; i <= 2024; i++) {
+        const item = document.createElement('div');
+        item.className = 'picker-item' + (i === selectedYear ? ' selected' : '');
+        item.textContent = i + '년';
+        item.onclick = () => selectYear(i);
+        yearPicker.appendChild(item);
     }
+    
+    // 월
+    monthPicker.innerHTML = '';
+    months.forEach((month, index) => {
+        const item = document.createElement('div');
+        item.className = 'picker-item' + (index + 1 === selectedMonth ? ' selected' : '');
+        item.textContent = month;
+        item.onclick = () => selectMonth(index + 1);
+        monthPicker.appendChild(item);
+    });
+    
+    // 일
+    updateDayPicker();
+}
+
+function selectYear(year) {
+    selectedYear = year;
+    initDatePicker();
+}
+
+function selectMonth(month) {
+    selectedMonth = month;
+    updateDayPicker();
+    highlightMonth();
+}
+
+function selectDay(day) {
+    selectedDay = day;
+    highlightDay();
+}
+
+function highlightMonth() {
+    document.querySelectorAll('#monthPicker .picker-item').forEach((item, index) => {
+        item.className = 'picker-item' + (index + 1 === selectedMonth ? ' selected' : '');
+    });
+}
+
+function highlightDay() {
+    document.querySelectorAll('#dayPicker .picker-item').forEach((item, index) => {
+        item.className = 'picker-item' + (index + 1 === selectedDay ? ' selected' : '');
+    });
+}
+
+function updateDayPicker() {
+    const dayPicker = document.getElementById('dayPicker');
+    const daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
+    
+    dayPicker.innerHTML = '';
+    for (let i = 1; i <= daysInMonth; i++) {
+        const item = document.createElement('div');
+        item.className = 'picker-item' + (i === selectedDay ? ' selected' : '');
+        item.textContent = i + '일';
+        item.onclick = () => selectDay(i);
+        dayPicker.appendChild(item);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 날짜 필드 클릭 시 한글 picker 열기
+    const dateInput = document.getElementById('wr_3');
+    if (dateInput) {
+        dateInput.addEventListener('click', openDatePicker);
+    }
+    
+    // 초기 날짜 설정
+    document.getElementById('wr_3').value = '1980년 1월 1일';
     
     var reservationForm = document.getElementById('reservationForm');
     reservationForm.addEventListener('submit', function(event) {
@@ -293,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         var name = document.getElementById('wr_name').value.trim();
         var phone = document.getElementById('wr_2').value.trim();
-        var birth = document.getElementById('wr_3').value.trim();
+        var birth = document.getElementById('wr_3_value').value.trim();
         var content = document.getElementById('wr_4').value.trim();
         var agreeTerms = document.getElementById('terms').checked;
 
@@ -318,6 +518,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return; 
         }
 
+        // 예약 신청 중 표시
+        var submitBtn = document.querySelector('button[type="submit"]');
+        var originalText = submitBtn.textContent;
+        submitBtn.textContent = '예약 신청 중...';
+        submitBtn.disabled = true;
+
         var apiUrl = 'https://cjtoph.mycafe24.com/proxy.php';
         var queryParams = 'name=' + encodeURIComponent(name) +
                           '&phone=' + encodeURIComponent(phone) +
@@ -329,21 +535,36 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-            mode: 'no-cors'
+            }
         })
-        .then(function() {
-            alert('예약 신청이 완료되었습니다.\\n직원이 근무시간에 순차적으로 연락드리겠습니다.');
+        .then(function(response) {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
             
-            setTimeout(() => {
-                if (window.FlutterClose) {
-                    FlutterClose.postMessage('close');
-                }
-            }, 1000);
+            if (!response.ok) {
+                throw new Error('HTTP ' + response.status);
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            if (data && data.success) {
+                alert('✅ ' + (data.message || '예약 신청이 완료되었습니다.') + '\\n\\n직원이 근무시간에 순차적으로 연락드리겠습니다.');
+                
+                setTimeout(function() {
+                    if (window.FlutterClose) {
+                        FlutterClose.postMessage('close');
+                    }
+                }, 1000);
+            } else {
+                throw new Error(data.message || '예약 실패');
+            }
         })
         .catch(function(error) {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            
             console.error('API 호출 오류:', error);
-            alert('예약 신청 중 오류가 발생했습니다.\\n잠시 후 다시 시도해주세요.');
+            alert('❌ 예약 신청 중 오류가 발생했습니다.\\n\\n잠시 후 다시 시도해주세요.\\n\\n(오류: ' + error.message + ')');
         });
     });
 });
