@@ -219,3 +219,5 @@ class _UpdateGateState extends State<UpdateGate> {
 //
 // <setting.gradle.kts>
 // android
+
+// flutter run -d web-server

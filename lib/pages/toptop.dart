@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'page_select.dart';
 import 'flask.dart';
 import 'toptop.dart';
@@ -20,6 +21,7 @@ class _ToptopState extends State<Toptop> {
   String? _imageUrl;
 
   List<Map<String, String>> conversationHistory = [];
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +52,13 @@ class _ToptopState extends State<Toptop> {
     await prefs.setString('chat_history', jsonEncode(conversationHistory));
   }
 
+  void launchLink(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     const baseWidth = 375;
@@ -65,7 +74,7 @@ class _ToptopState extends State<Toptop> {
           children: [
             _imageUrl == null
                 ? Positioned(
-              left: (375 * widthRatio - 200 * widthRatio) / 2,   // size box #3
+              left: (375 * widthRatio - 200 * widthRatio) / 2,
               top: 40 * heightRatio,
               child: SizedBox(
                 width: 200 * widthRatio,
@@ -74,7 +83,7 @@ class _ToptopState extends State<Toptop> {
               ),
             )
                 : Positioned(
-              left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
+              left: (375 * widthRatio - 335 * widthRatio) / 2,
               top: 40 * heightRatio,
               child: SizedBox(
                 width: 335 * widthRatio,
@@ -83,7 +92,7 @@ class _ToptopState extends State<Toptop> {
               ),
             ),
             Positioned(
-              left: (375 * widthRatio - 335 * widthRatio) / 2,   // size box #3
+              left: (375 * widthRatio - 335 * widthRatio) / 2,
               top: 260 * heightRatio,
               child: SizedBox(
                 width: 335 * widthRatio,
@@ -97,7 +106,7 @@ class _ToptopState extends State<Toptop> {
                       expands: true,
                       maxLines: null,
                       decoration: InputDecoration(
-                        hintText: isAnswered ? "" : "질문을 입력하세요   예시) 청주탑병원이 어디야?",   // 2.0.6
+                        hintText: isAnswered ? "" : "질문을 입력하세요   예시) 청주탑병원이 어디야?",
                         counterText: "",
                         contentPadding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                         filled: true,
@@ -131,7 +140,6 @@ class _ToptopState extends State<Toptop> {
               left: 300 * widthRatio,
               top: 400 * heightRatio,
               child: GestureDetector(
-
                 onTap: () async {
                   if (!isAnswered) {
                     if (_controller.text.trim().isEmpty) {
@@ -170,41 +178,74 @@ class _ToptopState extends State<Toptop> {
                     });
                   }
                 },
-              child: SizedBox(
-                width: 50 * widthRatio,
-                height: 50 * heightRatio,
-                child: isLoading
-                    ? const CircularProgressIndicator()
-                    : Image.asset(
-                  isAnswered ? 'assets/images/text_esc.png' : 'assets/images/text_enter.png',
-                  fit: BoxFit.contain,
+                child: SizedBox(
+                  width: 50 * widthRatio,
+                  height: 50 * heightRatio,
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : Image.asset(
+                    isAnswered ? 'assets/images/text_esc.png' : 'assets/images/text_enter.png',
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            left: (375 * widthRatio - 340 * widthRatio) / 2,   // size box #3
-            top: 470 * heightRatio,   // size box #3
-            child: SizedBox(
-              width: 340 * widthRatio,   // size box #3
-              height: 200 * heightRatio,   // size box #3
-              child: Image.asset('assets/images/doctors.png', fit: BoxFit.contain),
-            ),
-          ),
-          Positioned(
-            left: 290 * widthRatio,
-            top: 580 * heightRatio,
-            child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSelect())),
+
+            Positioned(
+              left: (375 * widthRatio - 340 * widthRatio) / 2,
+              top: 470 * heightRatio,
               child: SizedBox(
-                width: 70 * widthRatio,
-                height: 70 * heightRatio,
-                child: Image.asset('assets/images/back.png', fit: BoxFit.contain),
+                width: 340 * widthRatio,
+                height: 175 * heightRatio,
+                child: Image.asset('assets/images/doctors_new.png', fit: BoxFit.contain),
               ),
             ),
-          ),
-        ],
-      ),),
+
+            // invincible_map (투명 버튼 - 지도)
+            Positioned(
+              left: 45 * widthRatio,
+              top: 610 * heightRatio,
+              child: GestureDetector(
+                onTap: () => launchLink(
+                  'https://map.naver.com/p/directions/-/14191664.3247314,4388614.527514,%EC%B2%AD%EC%A3%BC%ED%83%91%EB%B3%91%EC%9B%90,1445421759,PLACE_POI/-/transit?c=14190731.5541203%2C4388614.5275141%2C15.00%2C0%2C0%2C0%2Cdh',
+                ),
+                child: Container(
+                  width: 140 * widthRatio,
+                  height: 35 * heightRatio,
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+
+            // invincible_call (투명 버튼 - 전화)
+            Positioned(
+              left: 185 * widthRatio,
+              top: 610 * heightRatio,
+              child: GestureDetector(
+                onTap: () => launchLink('tel:0439008875'),
+                child: Container(
+                  width: 140 * widthRatio,
+                  height: 35 * heightRatio,
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+
+            Positioned(
+              left: 10 * widthRatio,
+              top: 40 * heightRatio,
+              child: GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PageSelect())),
+                child: SizedBox(
+                  width: 70 * widthRatio,
+                  height: 70 * heightRatio,
+                  child: Image.asset('assets/images/back_toptop.png', fit: BoxFit.contain),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
